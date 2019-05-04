@@ -1,0 +1,25 @@
+
+
+services:
+
+  ## Usuarios Service
+  base.usuarios.service:
+      class: App\Services\UsuarioServices
+      arguments: ['@doctrine.orm.entity_manager', '@service_container', '@request_stack']
+      public: true
+  App\Services\UsuarioServices: '@base.usuarios.service'
+
+  ## TipoUsuarios Service
+  base.tipousuarios.service:
+      class: App\Services\TipoUsuariosServices
+      arguments: ['@doctrine.orm.entity_manager', '@service_container', '@request_stack']
+      public: true
+  App\Services\TipoUsuariosServices: '@base.tipousuarios.service'
+
+  ## TipoClientes Service
+  base.tipoclientes.service:
+      class: App\Services\TipoClientesServices
+      arguments: ['@doctrine.orm.entity_manager', '@service_container', '@request_stack']
+      public: true
+  App\Services\TipoClientesServices: '@base.tipoclientes.service'
+  
