@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 use JMS\Serializer\Annotation as Serializer;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Usuarios
@@ -61,29 +62,29 @@ class Usuarios
 
     /**
      * @var \DateTime
-     *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="USUA_FECHACREACION", type="datetime", nullable=false)
      */
-    private $usuaFechacreacion = 'current_timestamp()';
+    private $usuaFechacreacion;
 
     /**
      * @var \DateTime
-     *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="USUA_FECHAMODIFICACION", type="datetime", nullable=false)
      */
-    private $usuaFechamodificacion = 'current_timestamp()';
+    private $usuaFechamodificacion;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="USUA_FECHAELIMINACION", type="datetime", nullable=true)
      */
-    private $usuaFechaeliminacion = 'NULL';
+    private $usuaFechaeliminacion;
 
     /**
      * @var \TipoClientes
      *
-     * @ORM\ManyToOne(targetEntity="TipoClientes")
+     * @ORM\ManyToOne(targetEntity="TipoClientes", cascade={"persist", "remove" })
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="USUA_TICL_ID", referencedColumnName="TICL_ID")
      * })
@@ -93,7 +94,7 @@ class Usuarios
     /**
      * @var \TipoUsuarios
      *
-     * @ORM\ManyToOne(targetEntity="TipoUsuarios")
+     * @ORM\ManyToOne(targetEntity="TipoUsuarios", cascade={"persist", "remove" })
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="USUA_TIUS_ID", referencedColumnName="TIUS_ID")
      * })
@@ -307,11 +308,11 @@ class Usuarios
     /**
      * Set usuaTicl
      *
-     * @param \AppBundle\Entity\TipoClientes $usuaTicl
+     * @param \App\Entity\TipoClientes $usuaTicl
      *
      * @return Usuarios
      */
-    public function setUsuaTicl(\AppBundle\Entity\TipoClientes $usuaTicl = null)
+    public function setUsuaTicl(\App\Entity\TipoClientes $usuaTicl = null)
     {
         $this->usuaTicl = $usuaTicl;
 
@@ -331,11 +332,11 @@ class Usuarios
     /**
      * Set usuaTius
      *
-     * @param \AppBundle\Entity\TipoUsuarios $usuaTius
+     * @param \App\Entity\TipoUsuarios $usuaTius
      *
      * @return Usuarios
      */
-    public function setUsuaTius(\AppBundle\Entity\TipoUsuarios $usuaTius = null)
+    public function setUsuaTius(\App\Entity\TipoUsuarios $usuaTius = null)
     {
         $this->usuaTius = $usuaTius;
 

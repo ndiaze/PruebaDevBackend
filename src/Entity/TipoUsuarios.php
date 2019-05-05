@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 use JMS\Serializer\Annotation as Serializer;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * TipoUsuarios
  *
@@ -33,14 +33,14 @@ class TipoUsuarios
 
     /**
      * @var \DateTime
-     * Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="TIUS_FECHACREACION", type="datetime", nullable=false)
      */
     private $tiusFechacreacion;
 
     /**
      * @var \DateTime
-     * Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="TIUS_FECHAMODIFICACION", type="datetime", nullable=false)
      */
     private $tiusFechamodificacion;
@@ -50,7 +50,7 @@ class TipoUsuarios
      *
      * @ORM\Column(name="TIUS_FECHAELIMINACION", type="datetime", nullable=true)
      */
-    private $tiusFechaeliminacion = 'NULL';
+    private $tiusFechaeliminacion;
 
 
 

@@ -11,6 +11,8 @@ use Doctrine\ORM\EntityNotFoundException;
 use Psr\Container\ContainerInterface;
 use App\Interfaces\IUsuarioServices;
 use App\Entity\Usuarios;
+use App\Entity\TipoClientes;
+use App\Entity\TipoUsuarios;
 
 class UsuarioServices implements IUsuarioServices
 {
@@ -18,10 +20,25 @@ class UsuarioServices implements IUsuarioServices
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var ContainerInterface
+     */
     private $container;
+    /**
+     * @var RequestStack
+     */
     protected $requestStack;
+    /**
+     * @var RequestStack
+     */
     protected $req;
 
+    /**
+     * Costructor
+     * @param EntityManagerInterface $entityManager
+     * @param ContainerInterface $container
+     * @param RequestStack $requestStack
+     */
     public function __construct(
         EntityManagerInterface $entityManager,
         ContainerInterface $container,
@@ -34,21 +51,30 @@ class UsuarioServices implements IUsuarioServices
         $this->req = $this->requestStack->getCurrentRequest();
     }
 
-    public function Create()
+    /**
+     * Crear un usuario
+     * @param Usuarios $pUsuarios
+     */
+    public function Create(Usuarios $pUsuarios)
     {
-        $security = $this->container->get("police.security.service");
+        //@ParamConver no agrega la clase anidada
+        $idTipoClientes = $pUsuarios->getUsuaTicl()->getTiclId();   
+        $referenceTipoClientes = $this->entityManager->getRepository(TipoClientes::class)->find($idTipoClientes);
+        $pUsuarios->setUsuaTicl($referenceTipoClientes);
 
-        $entity = new Usuarios();
-        $entity->setUsuaCorreo($this->req->request->get("usuaCorreo", null));
-        $entity->setUsuaNombre($this->req->request->get("usuaNombre", null));
-        $entity->setUsuaApellidopaterno($this->req->request->get("usuaApellidopaterno", null));
-        $entity->setUsuaApellidomaterno($this->req->request->get("usuaApellidomaterno", null));
+        $idTipoUsuarios = $pUsuarios->getUsuaTius()->getTiusId();           
+        $referenceTipoUsuarios = $this->entityManager->getRepository(TipoUsuarios::class)->find($idTipoUsuarios);
+        $pUsuarios->setUsuaTius($referenceTipoUsuarios);
 
         $repository = $this->entityManager->getRepository(Usuarios::class);
-        $usuario = $repository->Create($entity);
+        $repository->Create($pUsuarios);
 
     }
 
+    /**
+     * Obtiene todo los registros
+     * @return Lista de TipoClientes
+     */
     public function ReadAll()
     {
         $repository = $this->entityManager->getRepository(Usuarios::class);

@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 use JMS\Serializer\Annotation as Serializer;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * TipoClientes
  *
@@ -33,14 +33,14 @@ class TipoClientes
 
     /**
      * @var \DateTime
-     * Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="TICL_FECHACREACION", type="datetime", nullable=false)
      */
     private $ticlFechacreacion;
 
     /**
      * @var \DateTime
-     * Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="TICL_FECHAMODIFICACION", type="datetime", nullable=false)
      */
     private $ticlFechamodificacion;
@@ -50,7 +50,7 @@ class TipoClientes
      *
      * @ORM\Column(name="TICL_FECHAELIMINACION", type="datetime", nullable=true)
      */
-    private $ticlFechaeliminacion = 'NULL';
+    private $ticlFechaeliminacion;
 
 
 

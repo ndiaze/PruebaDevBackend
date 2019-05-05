@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3164f7cde08d71a52bca64c0ae65f8cc",
+    "content-hash": "4695b72474908f6d2fa3488ea8a4b324",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -6525,8 +6525,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "symfony/lts": 20,
-        "jms/serializer-bundle": 20
+        "jms/serializer-bundle": 20,
+        "symfony/lts": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

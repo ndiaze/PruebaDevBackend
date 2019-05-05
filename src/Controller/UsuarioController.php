@@ -15,6 +15,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use App\Entity\Usuarios;
 
 /**
@@ -22,8 +25,9 @@ use App\Entity\Usuarios;
  *
  * @Route("/api")
  */
-class UsuarioController extends FOSRestController 
+class UsuarioController extends FOSRestController
 {
+
 
     /**
      * @Rest\Post("/Usuarios", name="crear usuario")
@@ -47,8 +51,13 @@ class UsuarioController extends FOSRestController
      *
      *
      * @SWG\Tag(name="Usuarios")
+     * @ParamConverter("pUsuarios", converter="fos_rest.request_body")
+     * @param Usuarios $pUsuarios
+     * @return Response
      */
-    public function Create() {
+    public function Create(Usuarios $pUsuarios) 
+    {
+
         $serializer = $this->get('jms_serializer');
         $em = $this->getDoctrine()->getManager();
         $message = "";
@@ -56,8 +65,8 @@ class UsuarioController extends FOSRestController
 
         try {
             
-            $servicio = $this->get('police.usuario.service');
-            $servicio->Create();
+            $servicio = $this->get('base.usuarios.service');
+            $servicio->Create($pUsuarios);
 
             $sc = Response::HTTP_OK;
             $result = Array(
@@ -72,11 +81,11 @@ class UsuarioController extends FOSRestController
                 'data' =>  $ex->getMessage(),
             );
         } catch (\Doctrine\DBAL\DBALException $ex){
-            switch($ex->getErrorCode()){
+            /*switch($ex->getErrorCode()){
                 case 1062:
                     $message = "MSJ-4XXC-USUARIODUPLICADO";
                     break;
-            }
+            }*/
 
             $result = Array(
                 'code' => $sc,
