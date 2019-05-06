@@ -7,4 +7,5 @@ interface IUsuarioServices
 {
     public function Create(Usuarios $usuario);
     public function ReadAll();
+    public function Update($id, Usuarios $usuario);
 }

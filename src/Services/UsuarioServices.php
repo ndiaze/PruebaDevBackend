@@ -81,4 +81,19 @@ class UsuarioServices implements IUsuarioServices
         return $repository->ReadAll();
     }
 
+    public function Update($id, Usuarios $pUsuarios)
+    {
+        //@ParamConver no agrega la clase anidada
+        $idTipoClientes = $pUsuarios->getUsuaTicl()->getTiclId();   
+        $referenceTipoClientes = $this->entityManager->getRepository(TipoClientes::class)->find($idTipoClientes);
+        $pUsuarios->setUsuaTicl($referenceTipoClientes);
+
+        $idTipoUsuarios = $pUsuarios->getUsuaTius()->getTiusId();           
+        $referenceTipoUsuarios = $this->entityManager->getRepository(TipoUsuarios::class)->find($idTipoUsuarios);
+        $pUsuarios->setUsuaTius($referenceTipoUsuarios);
+
+        $repository = $this->entityManager->getRepository(Usuarios::class);
+        $repository->Update($id, $pUsuarios);
+    }
+
 }

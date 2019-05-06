@@ -201,7 +201,7 @@ class UsuarioController extends FOSRestController
     }
 
     /**
-     * @Rest\Put("/Usuarios", name="Modificar usuarios")
+     * @Rest\Put("/Usuarios/{id}", name="Modificar usuarios")
      *
      * @SWG\Response(
      *     response=200,
@@ -222,22 +222,19 @@ class UsuarioController extends FOSRestController
      *
      *
      * @SWG\Tag(name="Usuarios")
+     * @ParamConverter("pUsuarios", converter="fos_rest.request_body")
+     * @param int $id
+     * @param Usuarios $pUsuarios
      */
-    public function Update(Request $request) {
+    public function Update(int $id, Usuarios $pUsuarios) {
         $serializer = $this->get('jms_serializer');
         $em = $this->getDoctrine()->getManager();
         $message = "";
 
         try {
-            $usuario = new Usuarios();
-            $usuario->setUsuaNombre($request->request->get("usuaNombre", null));
-            $usuario->setUsuaApellidopaterno($request->request->get("usuaApellidopaterno", null));
-            $usuario->setUsuaApellidomaterno($request->request->get("usuaApellidomaterno", null));
-            $usuario->setUsuaEmail($request->request->get("usuaEmail", null));
-            $usuario->setUsuaLenguaje($request->request->get("usuaLenguaje", "es"));
 
-            $servicio = $this->get('police.usuario.service');
-            $servicio->Update($request->request->get("usuaId", null), $usuario);
+            $servicio = $this->get('base.usuarios.service');
+            $servicio->Update($id, $pUsuarios);
 
             $sc = Response::HTTP_OK;
             $result = Array(

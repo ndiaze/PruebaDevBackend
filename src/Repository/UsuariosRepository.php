@@ -22,4 +22,23 @@ class UsuariosRepository extends EntityRepository implements IUsuariosRepository
             'usuaFechaeliminacion'=> null
         ));
     }
+
+    public function Update($id, Usuarios $usuario)
+    {
+        $content = $this->_em->getRepository(Usuarios::class)->findOneBy(array('usuaId' => $id));
+
+        if(!empty($content))
+        {
+            $content->setUsuaNombre($usuario->getUsuaNombre());
+            $content->setUsuaApellidopaterno($usuario->getUsuaApellidopaterno());
+            $content->setUsuaApellidomaterno($usuario->getUsuaApellidomaterno());
+            $content->setUsuaCorreo($usuario->getUsuaCorreo());
+            $content->setUsuaEstado($usuario->getUsuaEstado());
+            $content->setUsuaTicl($usuario->getUsuaTicl());
+            $content->setUsuaTius($usuario->getUsuaTius());
+            $this->_em->flush();
+        }else{
+            throw new Exception('MSJ-4XXG-USUARIONOEXISTE');
+        }
+    }
 }
