@@ -9,20 +9,30 @@ use App\Entity\Usuarios;
 
 class UsuariosRepository extends EntityRepository implements IUsuariosRepository
 {
+    /**
+     * Crea un usuario
+     * @param Usuario $usuario
+     */
     public function Create(Usuarios $usuario)
     {
         $this->_em->persist($usuario);
         $this->_em->flush();
         return $usuario;
     }
-    
+    /**
+     * Obtiene todos los registros
+     */
     public function ReadAll()
     {
         return $this->_em->getRepository(Usuarios::class)->findBy(array(
             'usuaFechaeliminacion'=> null
         ));
     }
-
+     /**
+     * Actualiza un registro por id
+     * @param int $id
+     * @param Usuario $usuario
+     */
     public function Update($id, Usuarios $usuario)
     {
         $content = $this->_em->getRepository(Usuarios::class)->findOneBy(array('usuaId' => $id));
